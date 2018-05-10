@@ -11,5 +11,5 @@ endif()
 
 find_package(GTest REQUIRED)
 
-add_subdirectory("Ch 1.Arrays And Strings")
+add_subdirectory("ch1_arrays_and_strings")
 
