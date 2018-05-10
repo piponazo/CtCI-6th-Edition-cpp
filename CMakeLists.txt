@@ -16,4 +16,4 @@ endif()
 find_package(GTest REQUIRED)
 
 add_subdirectory("ch1_arrays_and_strings")
-
+add_subdirectory("ch2_linked_lists")
