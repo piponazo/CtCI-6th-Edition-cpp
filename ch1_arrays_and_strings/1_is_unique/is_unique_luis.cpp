@@ -18,8 +18,6 @@ using namespace std;
 // Implementation with has table. 
 bool uniqueCharactersSet(const string& str);
 
-// Implementation with bitset. Useful for this case since we know the max size of a char (256)
-// We reduce the space complexity by 8
 bool uniqueCharactersBitset(const string& str);
 
 // Without using additional data structures. 
@@ -48,6 +46,8 @@ int main() {
 
 
 bool uniqueCharactersSet(const string& str) {
+    if (str.size() > 256) return false;
+
     unordered_set<char> charSet;
     for (const auto &c: str) {
         const bool inserted = charSet.insert(c).second;
@@ -58,7 +58,12 @@ bool uniqueCharactersSet(const string& str) {
     return true;
 }
 
+// Implementation with bitset. Useful for this case since we know the max size of a char (256)
+// Time complexity: always less than O(N)
+// Space complexity: O(1).
 bool uniqueCharactersBitset(const string& str) {
+    if (str.size() > 256) return false;
+
     bitset<256> bits(0);
     for (const int c: str) {
         if (bits.test(c)) {
@@ -70,6 +75,8 @@ bool uniqueCharactersBitset(const string& str) {
 }
 
 bool uniqueCharactersInPlace(string str) {
+    if (str.size() > 256) return false;
+
     sort(begin(str), end(str)); // O(N log N)
     for (size_t i = 0; i < str.size()-1; i++) {
         if (str[i] == str[i+1]) {

@@ -1,4 +1,6 @@
 add_executable(2.1_remove_dumps         "2-1-remove-dups.cpp")
+add_executable(2.1_remove_dumps_luis    "2-1-remove-dups_luis.cpp")
+
 add_executable(2.2_kth_to_last          "2-2-kthToLast.cpp")
 add_executable(2.3_delete_middle_node   "2-3-delete-middle-node.cpp")
 #add_executable(2.4_cpp_partition        "2-4-cpp_partitions.cpp")
