@@ -28,5 +28,5 @@ int CardBlackjack::number() const{
 }
 
 int CardBlackjack::value() const{
-    return _number;
+    return _value;
 }

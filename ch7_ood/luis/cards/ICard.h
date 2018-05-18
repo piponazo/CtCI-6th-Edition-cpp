@@ -5,7 +5,7 @@
 // This file should be part of the library API
 
 struct ICard {
-    virtual ~ICard() {}
+    virtual ~ICard() = default;
 
     virtual std::string suitName() const = 0;
 
