@@ -2,6 +2,7 @@ add_executable(1.1_is_unique                "1_is_unique/is_unique.cpp")
 add_executable(1.1b_is_unique               "1_is_unique/is_unique_luis.cpp")
 
 add_executable(1.2_check_permutation        "2_check_permutation/check_permutation.cpp")
+add_executable(1.2b_check_permutation       "2_check_permutation/check_permutation_luis.cpp")
 
 add_executable(1.3_urlify                   "3_urlify/URLify.cpp")
 
