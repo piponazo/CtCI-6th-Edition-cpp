@@ -29,3 +29,6 @@
 
 # CMake
 build*
+
+# QtCreator
+*.txt.user
