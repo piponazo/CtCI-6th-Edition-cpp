@@ -27,6 +27,9 @@
 *.out
 *.app
 
+# Vim
+*.swp
+
 # CMake
 build*
 
