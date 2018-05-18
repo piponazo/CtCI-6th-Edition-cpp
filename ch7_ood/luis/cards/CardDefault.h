@@ -8,7 +8,7 @@ struct CardDefault final: public ICard
 {
 public:
     CardDefault(const std::string& suit, int number);
-    std::string suitName() const override;
+    const std::string& suitName() const override;
     int number() const override;
     int value() const override;
 private:

@@ -16,67 +16,30 @@
 // Players: 2 to 7
 // Cards: 52 to 416
 
+#include <cards/DeckFactory.h>
+
 #include <iostream>
-#include <string>
-#include <memory>
-#include <vector>
 
 using namespace std;
 
-enum class Suits{
-    Clubs,
-    Diamonds,
-    Hearts,
-    Spades,
-};
-const int SUITS_NUMBER = 4;
-
-//struct Suit {
-//    string _name;
-//};
-// TODO: Consider to use a Suit structure to safe memory.
-// If each card has a string, we will be duplicating strings.
-// We could have a shared_ptr pointing to one of the four Suit instances.
-
-struct Card {
-    Card(const string& suit, int number);
-    friend ostream& operator<< (ostream& os, const Card& c);
-
-    string _suit;
-    int _number;
-};
-
-struct Deck {
-    Deck();
-    vector<Card> _cards;
-};
-
+ostream& operator<< (ostream& os, const ICard& c) {
+    os << "Card: " << c.suitName() << " - number: " << c.number() << " - value: " << c.value();
+}
 
 int main() {
-    cout << "Deck of cards!\n";
-    Deck deck;
-    for (const auto& card: deck._cards) {
-        cout << card << endl;
-    }
-}
-
-Deck::Deck() {
-    _cards.reserve(52);
-    vector<string> suitNames {"Clubs", "Diamonds", "Hearts", "Spades"};
-
-    for (const auto& suite: suitNames) {
-        for (int number=1; number<=13; number++) {
-            _cards.emplace_back(suite, number);
+    {
+        cout << "Default deck: \n";
+        auto deck = createDeck(CardType::Default);
+        for (const auto& card: deck->getCards()) {
+            cout << *card << endl;
         }
     }
-}
 
-Card::Card(const string& suit, int number):
-      _suit(suit)
-    , _number(number)
-{
-}
-
-ostream& operator<< (ostream& os, const Card& c) {
-    os << "Card: " << c._suit << " - " << c._number;
+    {
+        cout << "Blackjack deck: \n";
+        auto deck = createDeck(CardType::Blackjack);
+        for (const auto& card: deck->getCards()) {
+            cout << *card << endl;
+        }
+    }
 }

@@ -8,7 +8,7 @@ struct CardBlackjack final: public ICard
 {
 public:
     CardBlackjack(const std::string& suit, int number);
-    std::string suitName() const override;
+    const std::string& suitName() const override;
     int number() const override;
     int value() const override;
 private:

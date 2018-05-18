@@ -12,7 +12,7 @@ CardDefault::CardDefault(const std::string& suit, int number):
       }
 }
 
-std::string CardDefault::suitName() const{
+const std::string &CardDefault::suitName() const{
     return _suit;
 }
 

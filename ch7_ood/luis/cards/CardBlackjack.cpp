@@ -19,7 +19,7 @@ CardBlackjack::CardBlackjack(const std::string& suit, int number):
       // Ace can be worth 1 or 11
 }
 
-std::string CardBlackjack::suitName() const{
+const std::string &CardBlackjack::suitName() const{
     return _suit;
 }
 

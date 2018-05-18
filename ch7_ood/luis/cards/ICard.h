@@ -7,7 +7,7 @@
 struct ICard {
     virtual ~ICard() = default;
 
-    virtual std::string suitName() const = 0;
+    virtual const std::string& suitName() const = 0;
 
     // Digital value, from 1 to 13
     virtual int number() const = 0;
