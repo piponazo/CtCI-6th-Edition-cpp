@@ -5,6 +5,7 @@ add_executable(1.2_check_permutation        "2_check_permutation/check_permutati
 add_executable(1.2b_check_permutation       "2_check_permutation/check_permutation_luis.cpp")
 
 add_executable(1.3_urlify                   "3_urlify/URLify.cpp")
+add_executable(1.3b_urlify                  "3_urlify/URLify_luis.cpp")
 
 add_executable(1.4a_palindrome_permutation  "4_palindrome_permutation/solution_a.cpp")
 add_executable(1.4b_palindrome_permutaion   "4_palindrome_permutation/solution_b.cpp")
