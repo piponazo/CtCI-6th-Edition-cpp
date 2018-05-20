@@ -9,6 +9,7 @@ add_executable(1.3b_urlify                  "3_urlify/URLify_luis.cpp")
 
 add_executable(1.4a_palindrome_permutation  "4_palindrome_permutation/solution_a.cpp")
 add_executable(1.4b_palindrome_permutaion   "4_palindrome_permutation/solution_b.cpp")
+add_executable(1.4c_palindrome_permutaion   "4_palindrome_permutation/solution_luis.cpp")
 
 add_executable(1.5a_one_way                 "5_one_way/solution_a.cpp")
 add_executable(1.5b_one_way                 "5_one_way/solution_b.cpp")
