@@ -2,35 +2,13 @@
 // FOLLOW UP
 // How would you solve this problem if a temporary buffer is not allowed?
 
+#include "lists/Node.h"
+#include "lists/utils.h"
+
 #include <iostream>
-#include <memory>
 #include <unordered_set>
 
 using namespace std;
-
-class Node
-{
-public:
-    Node(int _value): value(_value) {
-    }
-
-    /// Create node and append it to this one.
-    /// @return Pointer to the new node
-    Node* appendToTail(int value) {
-        next = make_unique<Node>(value);
-        return next.get();
-    }
-
-    int value;
-    unique_ptr<Node> next;
-};
-
-void printLinkedList(const Node* node) {
-    if (node) {
-        cout << node->value << " ";
-        printLinkedList(node->next.get());
-    }
-}
 
 // Use a hash table to identify if a value has been already added:
 // Time complexity: O(N)
