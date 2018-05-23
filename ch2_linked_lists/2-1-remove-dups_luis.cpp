@@ -4,6 +4,7 @@
 
 #include "lists/Node.h"
 #include "lists/utils.h"
+#include "catch.hpp"
 
 #include <iostream>
 #include <unordered_set>
@@ -22,7 +23,7 @@ void removeDuplicates(Node* node) {
     unordered_set<int> set;
     set.insert(node->value);
 
-    while(node->next) {
+    while(node && node->next) {
         auto& next = node->next;
         bool duplicatedValue = !set.insert(next->value).second;
 
@@ -58,27 +59,23 @@ void removeDuplicatesNoBuffer(Node* node) {
     removeDuplicatesNoBuffer(node->next.get());
 }
 
-int main()
-{
+TEST_CASE( "Remove duplicates", "[lists]" ) {
     Node root(5);
     Node *tail = &root;
 
-    for (int i=0; i<10; i++) {
+    for (int i=1; i<=5; i++) {
         tail = tail->appendToTail(i);
     }
 
-    cout << "created linked list: ";
-    printLinkedList(&root);
-    cout << endl;
+    REQUIRE(countNodes(&root) == 6);
 
-    cout << "Remove duplicates ...";
-    //removeDuplicates(&root);
-    removeDuplicatesNoBuffer(&root);
-    cout << endl;
+    SECTION("with hash table version") {
+        removeDuplicates(&root);
+        REQUIRE(countNodes(&root) == 5);
+    }
 
-    cout << "list after removal: ";
-    printLinkedList(&root);
-    cout << endl;
-
-    return EXIT_SUCCESS;
+    SECTION("with no space version") {
+        removeDuplicatesNoBuffer(&root);
+        REQUIRE(countNodes(&root) == 5);
+    }
 }

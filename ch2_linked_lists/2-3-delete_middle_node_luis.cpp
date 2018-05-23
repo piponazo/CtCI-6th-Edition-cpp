@@ -8,42 +8,38 @@
 
 #include "lists/Node.h"
 #include "lists/utils.h"
+#include "catch.hpp"
 
 #include <iostream>
 
 using namespace std;
 
-void deleteNode(Node* node) {
-    if (!node->next) {
-        throw runtime_error("node does not have a next pointer");
+bool deleteNode(Node* node) {
+    if (!node || !node->next) {
+        return false;
     }
 
     node->value = node->next->value;
     node->next = move(node->next->next);
+    return true;
 }
 
-int main()
-{
-    Node root(5);
+TEST_CASE( "delete node", "[lists]" ) {
+    Node root(0);
     Node *tail = &root;
-    Node *nodeToDelete = nullptr;
 
-    for (int i=0; i<10; i++) {
+    for (int i=1; i<=5; i++) {
         tail = tail->appendToTail(i);
-        if (i==5) {
-            nodeToDelete = tail;
-        }
     }
 
-    cout << "created linked list: ";
-    printLinkedList(&root);
-    cout << endl;
+    SECTION("delete inner node") {
+        auto node = getNodeIt(&root, 3);
+        REQUIRE(node != nullptr);
+        REQUIRE(deleteNode(node) == true);
+        REQUIRE(getNodeIt(&root, 3) == nullptr);
+    }
 
-    deleteNode(nodeToDelete);
-
-    cout << "created linked list: ";
-    printLinkedList(&root);
-    cout << endl;
-
-    return EXIT_SUCCESS;
+    SECTION("does not delete a non existing node") {
+        REQUIRE_FALSE(deleteNode(nullptr));
+    }
 }

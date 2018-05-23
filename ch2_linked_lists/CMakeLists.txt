@@ -5,11 +5,17 @@ add_library(lists
     lists/utils.cpp
 )
 
-link_libraries(lists)
+add_executable(2_luis
+    2_main_luis.cpp
+    2_utils.cpp
+    2-1-remove-dups_luis.cpp
+    2-2-kthToLast_luis.cpp
+    2-3-delete_middle_node_luis.cpp
+    2-4-partition_luis.cpp
+)
 
-add_executable(2.1_remove_dumps_luis    "2-1-remove-dups_luis.cpp")
-add_executable(2.2_kth_to_last          "2-2-kthToLast_luis.cpp")
-add_executable(2.3_delete_middle_node   "2-3-delete_middle_node_luis.cpp")
+target_link_libraries(2_luis PRIVATE lists)
+target_include_directories(2_luis PRIVATE ${PROJECT_SOURCE_DIR}) # To find the catch.hpp file
 
 #add_executable(2.3_delete_middle_node   "2-3-delete-middle-node.cpp")
 #add_executable(2.4_cpp_partition        "2-4-cpp_partitions.cpp")

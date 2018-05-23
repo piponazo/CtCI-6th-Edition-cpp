@@ -3,6 +3,7 @@
 
 #include "lists/Node.h"
 #include "lists/utils.h"
+#include "catch.hpp"
 
 #include <iostream>
 #include <unordered_set>
@@ -10,7 +11,7 @@
 using namespace std;
 
 const Node* findKtoLast(const Node* root, int k) {
-    const Node *node = root; 
+    const Node *node = root;
     const Node *runner = root;
 
     // Advance runner alone k positions
@@ -31,30 +32,27 @@ const Node* findKtoLast(const Node* root, int k) {
     return node;
 }
 
-int main()
-{
+TEST_CASE( "return Kth to last", "[lists]" ) {
     Node root(5);
     Node *tail = &root;
 
-    for (int i=0; i<10; i++) {
+    for (int i=1; i<=5; i++) {
         tail = tail->appendToTail(i);
     }
 
-    cout << "created linked list: ";
-    printLinkedList(&root);
-    cout << endl;
+    REQUIRE(countNodes(&root) == 6);
 
-    auto kToLast = findKtoLast(&root, 1);
-    cout << "kToLast (1): " << kToLast->value << endl;
-
-    kToLast = findKtoLast(&root, 3);
-    cout << "kToLast (3): " << kToLast->value << endl;
-
-    try {
-        auto kToLast = findKtoLast(&root, 15);
-    } catch (const exception& e) {
-        cerr << "exception caught with kToLast(15): " << e.what() << endl;
+    SECTION("return last element") {
+        auto kToLast = findKtoLast(&root, 1);
+        REQUIRE(kToLast->value == 5);
     }
 
-    return EXIT_SUCCESS;
+    SECTION("return 3-to-last element") {
+        auto kToLast = findKtoLast(&root, 3);
+        REQUIRE(kToLast->value == 3);
+    }
+
+    SECTION("throw when k is greater than number of elements") {
+        REQUIRE_THROWS(findKtoLast(&root, 8));
+    }
 }

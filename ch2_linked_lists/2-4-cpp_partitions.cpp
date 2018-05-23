@@ -14,54 +14,54 @@
  *  in-place. Complexity is O(n).
  */
  typedef struct node {
-	int val;
-	struct node *next;
+    int val;
+    struct node *next;
 } node;
 
 void swap(node *n1, node *n2)
 {
-	int tmp;
-	if (n1 == NULL || n2 == NULL)
-		return;
-	tmp = n1->val;
-	n1->val = n2->val;
-	n2->val = tmp;
+    int tmp;
+    if (n1 == NULL || n2 == NULL)
+        return;
+    tmp = n1->val;
+    n1->val = n2->val;
+    n2->val = tmp;
 }
 
 bool findnSwap(node *head, int p)
 {
-	node *tmpHead = head;
+    node *tmpHead = head;
 
-	while (head) {
-		if (head->val == p) {
-			swap(head, tmpHead);
-			return true;
-		}
-		head = head->next;
-	}
-	return false;
+    while (head) {
+        if (head->val == p) {
+            swap(head, tmpHead);
+            return true;
+        }
+        head = head->next;
+    }
+    return false;
 }
 
 void partitionList(node *head, int p)
 {
-	node *tmpHead = head;
-	node *prevP = head;
-	if (head == NULL)
-		return;
+    node *tmpHead = head;
+    node *prevP = head;
+    if (head == NULL)
+        return;
 
-	if (!findnSwap(head, p))
-		return;
+    if (!findnSwap(head, p))
+        return;
 
-	node *partition = head->next;
-	head = head->next;
+    node *partition = head->next;
+    head = head->next;
 
-	while (head) {
-		if (p > head->val) {
-			swap(head, partition);
-			prevP = partition;
-			partition = partition->next;
-		}
-		head = head->next;
-	}
-	swap(tmpHead, prevP);
+    while (head) {
+        if (p > head->val) {
+            swap(head, partition);
+            prevP = partition;
+            partition = partition->next;
+        }
+        head = head->next;
+    }
+    swap(tmpHead, prevP);
 }
