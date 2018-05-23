@@ -7,30 +7,18 @@
 
 using namespace std;
 
-set<int> getRandomSequence() {
-    random_device rd;  //Will be used to obtain a seed for the random number engine
-    mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-    uniform_int_distribution<> dis(1, 50);
-
-    set<int> seq;
-    for(int i = 0; i<20; i++) {
-        seq.insert(dis(gen));
-    }
-    return seq;
-}
-
 unique_ptr<Node> createBinarySearchTree(const set<int>& seq) {
     if (seq.empty()) {
         return nullptr;
     }
 
-    int m = median(seq);
-    unique_ptr<Node> root = make_unique<Node>(m);
+    int medianValue = median(seq);
+    unique_ptr<Node> root = make_unique<Node>(medianValue);
 
-    auto its = seq.equal_range(m);
+    auto iteratorsRange = seq.equal_range(medianValue);
 
-    root->left = createBinarySearchTree({seq.begin(), its.first});
-    root->right = createBinarySearchTree({its.second, seq.end()});
+    root->left = createBinarySearchTree({seq.begin(), iteratorsRange.first});
+    root->right = createBinarySearchTree({iteratorsRange.second, seq.end()});
 
     return root;
 }
@@ -65,11 +53,11 @@ void printLevelOrder(const unique_ptr<Node>& root) {
     }
 }
 
-int height(const unique_ptr<Node>& root) {
+int depth(const unique_ptr<Node>& root) {
     if (!root) {
-        return 0;
+        return -1;
     }
-    return 1 + max(height(root->left), height(root->right));
+    return 1 + max(depth(root->left), depth(root->right));
 }
 
 int  median(const std::set<int>& seq)

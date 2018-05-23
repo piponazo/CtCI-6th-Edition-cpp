@@ -13,12 +13,9 @@ struct Node {
     std::unique_ptr<Node> right; ///< right child
 };
 
-// std::set contains a sorted set of unique objects
-std::set<int> getRandomSequence();
-
 std::unique_ptr<Node> createBinarySearchTree(const std::set<int>& seq);
 
 void preOrderTraversal(const std::unique_ptr<Node>& root);
 void printLevelOrder(const std::unique_ptr<Node>& root);
-int height(const std::unique_ptr<Node>& root);
+int depth(const std::unique_ptr<Node>& root);
 int  median(const std::set<int>& seq);
