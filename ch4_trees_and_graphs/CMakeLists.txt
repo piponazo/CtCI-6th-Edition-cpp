@@ -7,6 +7,7 @@ add_executable(4_luis
     luis/4_main.cpp
     luis/4.2_minimal_tree.cpp
     luis/4.3_list_of_depths.cpp
+    luis/4.4_check_balanced.cpp
 )
 
 target_link_libraries(4_luis PRIVATE tree)

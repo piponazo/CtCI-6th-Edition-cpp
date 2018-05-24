@@ -53,11 +53,11 @@ void printLevelOrder(const unique_ptr<Node>& root) {
     }
 }
 
-int depth(const unique_ptr<Node>& root) {
+int depth(const Node* root) {
     if (!root) {
         return -1;
     }
-    return 1 + max(depth(root->left), depth(root->right));
+    return 1 + max(depth(root->left.get()), depth(root->right.get()));
 }
 
 int  median(const std::set<int>& seq)

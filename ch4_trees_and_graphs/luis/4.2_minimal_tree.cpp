@@ -14,7 +14,7 @@ TEST_CASE("create binary search tree with minimal height", "[tree]"){
     {
         std::set<int> seq {10, 14, 19, 27, 31, 35, 42};
         auto root =createBinarySearchTree(seq);
-        REQUIRE(depth(root) == 2);
+        REQUIRE(depth(root.get()) == 2);
 
         REQUIRE(root->value == 27);
         REQUIRE(root->left->value == 14);
@@ -28,7 +28,7 @@ TEST_CASE("create binary search tree with minimal height", "[tree]"){
     {
         std::set<int> seq {1, 3, 4, 6, 7, 8, 10, 13, 14};
         auto root =createBinarySearchTree(seq);
-        REQUIRE(depth(root) == 3);
+        REQUIRE(depth(root.get()) == 3);
     }
 
 }
