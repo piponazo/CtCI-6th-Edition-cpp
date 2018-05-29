@@ -2,7 +2,8 @@
 // cannot use additional data structures.
 //
 // Hints: hash table, could a bit vector be useful, could you solve it in O(N logN) time?
-//
+
+#include "catch.hpp"
 
 #include <cstdlib>
 #include <string>
@@ -16,37 +17,9 @@
 using namespace std;
 
 // Implementation with has table. 
-bool uniqueCharactersSet(const string& str);
-
-bool uniqueCharactersBitset(const string& str);
-
-// Without using additional data structures. 
-bool uniqueCharactersInPlace(string str);
-
-int main() {
-    vector<string> inputs {
-        "",
-        "abc",
-        "abcdefgha",
-        "hello",
-        "kite",
-        "padle",
-        "mamonazo",
-    };
-
-    for (const auto& str: inputs) {
-        cout << "str: " << str << endl;
-        cout << "unique (method set)?: " << uniqueCharactersSet(str) << endl;
-        cout << "unique (method Bitset)?: " << uniqueCharactersBitset(str) << endl;
-        cout << "unique (method InPlace)?: " << uniqueCharactersInPlace(str) << endl;
-    }
-
-    return EXIT_SUCCESS;
-}
-
-
 bool uniqueCharactersSet(const string& str) {
-    if (str.size() > 256) return false;
+    if (str.size() > 256)
+        return false;
 
     unordered_set<char> charSet;
     for (const auto &c: str) {
@@ -62,7 +35,8 @@ bool uniqueCharactersSet(const string& str) {
 // Time complexity: always less than O(N)
 // Space complexity: O(1).
 bool uniqueCharactersBitset(const string& str) {
-    if (str.size() > 256) return false;
+    if (str.size() > 256)
+        return false;
 
     bitset<256> bits(0);
     for (const int c: str) {
@@ -74,8 +48,12 @@ bool uniqueCharactersBitset(const string& str) {
     return true;
 }
 
+// Without using additional data structures. 
 bool uniqueCharactersInPlace(string str) {
-    if (str.size() > 256) return false;
+    if (str.empty())
+        return true;
+    if (str.size() > 256)
+        return false;
 
     sort(begin(str), end(str)); // O(N log N)
     for (size_t i = 0; i < str.size()-1; i++) {
@@ -86,3 +64,31 @@ bool uniqueCharactersInPlace(string str) {
     return true;
 }
 
+TEST_CASE("unique characters in string -> true") {
+    vector<string> inputs {
+        "",
+        "abc",
+        "kite",
+        "padle",
+    };
+
+    for (const auto& str: inputs) {
+        CHECK(uniqueCharactersSet(str));
+        CHECK(uniqueCharactersBitset(str));
+        CHECK(uniqueCharactersInPlace(str));
+    }
+}
+
+TEST_CASE("repeated characters in string -> false") {
+    vector<string> inputs {
+        "abcdefgha",
+        "hello",
+        "mamonazo",
+    };
+
+    for (const auto& str: inputs) {
+        CHECK_FALSE(uniqueCharactersSet(str));
+        CHECK_FALSE(uniqueCharactersBitset(str));
+        CHECK_FALSE(uniqueCharactersInPlace(str));
+    }
+}

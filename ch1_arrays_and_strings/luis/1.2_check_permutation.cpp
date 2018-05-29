@@ -1,7 +1,8 @@
 // Check Permutation: Given two strings, write a method to decide if one is a permutation of the
 // other.
 
-#include <iostream>
+#include "catch.hpp"
+
 #include <string>
 #include <unordered_map>
 #include <algorithm>
@@ -16,7 +17,6 @@ bool isPermutationSort(string& ref, string& comp) {
     // Some day in a near future ...
     //sort(std::execution::par_unseq, begin(ref), end(ref));
     //sort(std::execution::par_unseq, begin(comp), end(comp));
-    
     return ref == comp;
 }
 
@@ -31,21 +31,31 @@ bool isPermutation(const string& ref, const string& comp) {
         charsInRef[c]++;
     }
 
-    return all_of(begin(comp), end(comp), [&charsInRef](char c) {
-            return charsInRef.count(c) == 1;
-    });
+    for (auto c: comp) {
+        charsInRef[c]--;
+        if (charsInRef[c]<0) {
+            return false;
+        }
+    }
 }
 
-int main() {
+TEST_CASE("It is permutation (with unique chars)") {
     string str1 ("asdfghjklñ");
     string str2 ("ñlkjhgfdsa");
-    string str3 ("ñlkjhgfdso");
+    REQUIRE(isPermutation(str1, str2));
+    REQUIRE(isPermutationSort(str1, str2));
+}
 
-    cout << "String 1: " << str1 << endl;
-    cout << "String 2: " << str2 << endl;
-    cout << "String 3: " << str3 << endl;
-    cout << "Is str2 a permutation of str1?: methodMap" << isPermutation(str1, str2) << endl;
-    cout << "Is str3 a permutation of str1?: methodMap" << isPermutation(str1, str3) << endl;
-    cout << "Is str2 a permutation of str1?: methodSort" << isPermutationSort(str1, str2) << endl;
-    cout << "Is str3 a permutation of str1?: methodSort" << isPermutationSort(str1, str3) << endl;
+TEST_CASE("It is permutation (with repeated chars)") {
+    string str1 ("asdfghjklñd");
+    string str2 ("ñlkjhgfdsad");
+    REQUIRE(isPermutation(str1, str2));
+    REQUIRE(isPermutationSort(str1, str2));
+}
+
+TEST_CASE("It isn't permutation") {
+    string str1 ("asdfghjklñ");
+    string str2 ("ñlkjhgfdso");
+    REQUIRE_FALSE(isPermutation(str1, str2));
+    REQUIRE_FALSE(isPermutationSort(str1, str2));
 }
