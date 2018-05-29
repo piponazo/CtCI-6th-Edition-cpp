@@ -7,7 +7,8 @@
 // Input: Tact Coa
 // Output: True (Permutations: "taco cat", "atco cta", etc.)
 
-#include <iostream>
+#include "catch.hpp"
+
 #include <string>
 #include <unordered_map>
 #include <algorithm>
@@ -28,12 +29,11 @@ bool isPermutationPalindrome(const string& str) {
     return charsWithOddOccurrences <= 1;
 }
 
-int main() {
-    string str("tact coa");
-    //string str("tact coa");
-//    string str("      aaaaaaaabbddeellloorrrrzz");
+TEST_CASE("strings are permutation of palindrome") {
+    REQUIRE(isPermutationPalindrome("tact coa"));
+    REQUIRE(isPermutationPalindrome("      aaaaaaaabbddeellloorrrrzz"));
+}
 
-    cout << "Input string: " << str << endl;
-    const bool ret = isPermutationPalindrome(str);
-    cout << "Is permutation of a palindrome: " << ret << endl;
+TEST_CASE("strings are not permutation of palindrome") {
+    REQUIRE_FALSE(isPermutationPalindrome("Tact coa"));
 }

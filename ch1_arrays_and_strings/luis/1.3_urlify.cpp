@@ -21,7 +21,8 @@
 //                       *
 //                 %20 ... How do we shift the next chars?
 
-#include <iostream>
+#include "catch.hpp"
+
 #include <string>
 #include <algorithm>
 
@@ -46,9 +47,14 @@ void urlify(string& str) {
     }
 }
 
-int main() {
+TEST_CASE("urlify string with spaces") {
     string str("Mr John Smith");
-    cout << "string: '" << str << "' -> size: " << str.size() << endl;
     urlify(str);
-    cout << "string: '" << str << "' -> size: " << str.size() << endl;
+    REQUIRE(str == "Mr%20John%20Smith");
+}
+
+TEST_CASE("urlify string without spaces") {
+    string str("JohnSmith");
+    urlify(str);
+    REQUIRE(str == "JohnSmith");
 }

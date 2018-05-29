@@ -1,10 +1,9 @@
-add_executable(1.3b_urlify                  "3_urlify/URLify_luis.cpp")
-add_executable(1.4c_palindrome_permutaion   "4_palindrome_permutation/solution_luis.cpp")
-
 add_executable(1_luis
     luis/1_main.cpp
     luis/1.1_is_unique.cpp
     luis/1.2_check_permutation.cpp
+    luis/1.3_urlify.cpp
+    luis/1.4_palindrome_permutation.cpp
     luis/one_way.cpp
     luis/rotate_image.cpp
 )
