@@ -6,6 +6,7 @@ add_executable(1.4c_palindrome_permutaion   "4_palindrome_permutation/solution_l
 add_executable(1_luis
     luis/1_main.cpp
     luis/one_way.cpp
+    luis/rotate_image.cpp
 )
 
 target_include_directories(1_luis PRIVATE ${PROJECT_SOURCE_DIR})
