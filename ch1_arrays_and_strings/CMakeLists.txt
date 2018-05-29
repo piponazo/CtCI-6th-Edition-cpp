@@ -8,4 +8,3 @@ add_executable(1_luis
     luis/1.7_rotate_matrix.cpp
 )
 
-target_include_directories(1_luis PRIVATE ${PROJECT_SOURCE_DIR}) # To find catch.hpp

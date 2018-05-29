@@ -11,4 +11,3 @@ add_executable(4_luis
 )
 
 target_link_libraries(4_luis PRIVATE tree)
-target_include_directories(4_luis PRIVATE ${PROJECT_SOURCE_DIR})

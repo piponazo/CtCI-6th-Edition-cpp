@@ -7,6 +7,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
+include_directories(${PROJECT_SOURCE_DIR}) # To find catch.hpp
+
 add_subdirectory("ch1_arrays_and_strings")
 add_subdirectory("ch2_linked_lists")
 add_subdirectory("ch4_trees_and_graphs")

@@ -35,5 +35,3 @@ target_link_libraries(7_tests
     PRIVATE
         cards
 )
-
-target_include_directories(7_tests PRIVATE ${PROJECT_SOURCE_DIR}) # To find catch.hpp
