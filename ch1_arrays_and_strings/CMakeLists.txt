@@ -8,7 +8,7 @@ add_executable(1_luis
     luis/rotate_image.cpp
 )
 
-target_include_directories(1_luis PRIVATE ${PROJECT_SOURCE_DIR})
+target_include_directories(1_luis PRIVATE ${PROJECT_SOURCE_DIR}) # To find catch.hpp
 
 #add_executable(1.4a_palindrome_permutation  "4_palindrome_permutation/solution_a.cpp")
 #add_executable(1.4b_palindrome_permutaion   "4_palindrome_permutation/solution_b.cpp")

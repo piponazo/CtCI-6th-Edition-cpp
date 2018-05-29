@@ -1,13 +1,2 @@
-#include <gtest/gtest.h>
-#include <iostream>
-
-int main(int argc, char** argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-
-    int ret = RUN_ALL_TESTS();
-
-    std::cout << "Tests finished with return value: " << ret << std::endl;
-
-    return ret;
-}
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#include "catch.hpp"
