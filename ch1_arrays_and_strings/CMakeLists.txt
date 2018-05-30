@@ -7,4 +7,5 @@ add_executable(1_luis
     luis/1.5_one_way.cpp
     luis/1.6_string_compression.cpp
     luis/1.7_rotate_matrix.cpp
+    luis/1.8_zero_matrix.cpp
 )
