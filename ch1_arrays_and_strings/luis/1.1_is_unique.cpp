@@ -16,24 +16,38 @@
 
 using namespace std;
 
-// Implementation with has table. 
+// Implementation with has table + range-for loops
+// Time complexity:   O(N)
+// Space complexity:  O(N)
+// Notes: This version is a bit longer than the one in line 36. But probably more performant
+//bool uniqueCharactersSet(const string& str) {
+//    if (str.size() > 256)
+//        return false;
+//    unordered_set<char> charSet;
+//    for (const auto &c: str) {
+//        const bool inserted = charSet.insert(c).second;
+//        if (!inserted) {
+//            return false;
+//        }
+//    }
+//    return true;
+//}
+
+// Implementation with has table + std::all_of + lambda
+// Time complexity:   O(N)
+// Space complexity:  O(N)
+// Notes: This version is a bit longer than the one in line 36. But probably more performant
 bool uniqueCharactersSet(const string& str) {
     if (str.size() > 256)
         return false;
 
     unordered_set<char> charSet;
-    for (const auto &c: str) {
-        const bool inserted = charSet.insert(c).second;
-        if (!inserted) {
-            return false;
-        }
-    }
-    return true;
+    return all_of(begin(str), end(str), [&charSet](char c){return charSet.insert(c).second;});
 }
 
 // Implementation with bitset. Useful for this case since we know the max size of a char (256)
-// Time complexity: always less than O(N)
-// Space complexity: O(1).
+// Time complexity:  O(N)
+// Space complexity: O(1)
 bool uniqueCharactersBitset(const string& str) {
     if (str.size() > 256)
         return false;
@@ -49,6 +63,8 @@ bool uniqueCharactersBitset(const string& str) {
 }
 
 // Without using additional data structures. 
+// Time complexity:  O(N logN)
+// Space complexity: O(1)
 bool uniqueCharactersInPlace(string str) {
     if (str.empty())
         return true;
@@ -64,7 +80,7 @@ bool uniqueCharactersInPlace(string str) {
     return true;
 }
 
-TEST_CASE("unique characters in string -> true") {
+TEST_CASE("1.1 - unique characters in string returns true") {
     vector<string> inputs {
         "",
         "abc",
@@ -79,7 +95,7 @@ TEST_CASE("unique characters in string -> true") {
     }
 }
 
-TEST_CASE("repeated characters in string -> false") {
+TEST_CASE("1.1 - repeated characters in string returns false") {
     vector<string> inputs {
         "abcdefgha",
         "hello",
