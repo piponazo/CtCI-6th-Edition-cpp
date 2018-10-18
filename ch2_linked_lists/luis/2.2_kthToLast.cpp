@@ -1,58 +1,97 @@
 // Return Kth to Last: Implement an algorithm to find the kth to last element of a singly linked
 // list.
 
+#include "catch.hpp"
 #include "lists/Node.h"
 #include "lists/utils.h"
-#include "catch.hpp"
 
 #include <iostream>
 #include <unordered_set>
 
 using namespace std;
 
-const Node* findKtoLast(const Node* root, int k) {
-    const Node *node = root;
-    const Node *runner = root;
+// Time complexity: O(N)
+// Space complexity: O(1)
+const Node* findKtoLast(const Node* root, size_t k)
+{
+    if (!root) {
+        return nullptr;
+    }
 
-    // Advance runner alone k positions
-    // We define k, such that passing k=1 returns the last element
-    for (int i=1; i<k; i++) {
-        if (!runner->next) {
+    const Node* p1 = root; // Runner
+    const Node* p2 = root;
+
+    // Advance p1 alone k positions
+    for (size_t i = 0; i < k; i++) {
+        if (!p1->next) {
             throw runtime_error("k is greater than list size");
         }
-        runner = runner->next.get();
+        p1 = p1->next.get();
     }
 
     // Now the two pointers advance together
-    while(runner->next) {
-        node = node->next.get();
-        runner = runner->next.get();
+    while (p1->next) {
+        p2 = p2->next.get();
+        p1 = p1->next.get();
     }
 
-    return node;
+    return p2;
 }
 
-TEST_CASE( "return Kth to last", "[lists]" ) {
-    Node root(5);
-    Node *tail = &root;
+// Time complexity: O(N)
+// Space complexity: O(N)
+const Node* findKtoLastRecursive(const Node* node, size_t k, size_t& i)
+{
+    if (!node) {
+        return nullptr;
+    }
+    auto nd = findKtoLastRecursive(node->next.get(), k, i);
+    if (i++ == k) {
+        return node;
+    }
+    return nd;
+}
 
-    for (int i=1; i<=5; i++) {
-        tail = tail->appendToTail(i);
+// Time complexity: O(N)
+// Space complexity: O(N)
+const Node* findKtoLastRecursive(const Node* root, size_t k)
+{
+    size_t i = 0;
+    const Node* ret = findKtoLastRecursive(root, k, i);
+    if (i == 0) {
+        return nullptr;
+    } else if (k > i)  {
+        throw runtime_error("k is greater than list size");
+    }
+    return ret;
+}
+
+TEST_CASE("return Kth to last element when list exists", "[2.2]")
+{
+    auto list = createList({5, 1, 2, 3, 4, 5});
+    REQUIRE(countNodes(list.get()) == 6);
+
+    SECTION("return last element")
+    {
+        REQUIRE(findKtoLast(list.get(), 0)->value == 5);
+        REQUIRE(findKtoLastRecursive(list.get(), 0)->value == 5);
     }
 
-    REQUIRE(countNodes(&root) == 6);
-
-    SECTION("return last element") {
-        auto kToLast = findKtoLast(&root, 1);
-        REQUIRE(kToLast->value == 5);
+    SECTION("return 3th last element")
+    {
+        REQUIRE(findKtoLast(list.get(), 2)->value == 3);
+        REQUIRE(findKtoLastRecursive(list.get(), 2)->value == 3);
     }
 
-    SECTION("return 3-to-last element") {
-        auto kToLast = findKtoLast(&root, 3);
-        REQUIRE(kToLast->value == 3);
+    SECTION("throw when k is greater than number of elements")
+    {
+        REQUIRE_THROWS(findKtoLast(list.get(), 8));
+        REQUIRE_THROWS(findKtoLastRecursive(list.get(), 8));
     }
+}
 
-    SECTION("throw when k is greater than number of elements") {
-        REQUIRE_THROWS(findKtoLast(&root, 8));
-    }
+TEST_CASE("return nullptr with empty list", "[2.2]")
+{
+    REQUIRE(findKtoLast(nullptr, 1) == nullptr);
+    REQUIRE(findKtoLastRecursive(nullptr, 1) == nullptr);
 }
