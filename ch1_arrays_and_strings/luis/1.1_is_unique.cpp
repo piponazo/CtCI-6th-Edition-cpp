@@ -2,6 +2,7 @@
 // cannot use additional data structures.
 //
 // Hints: hash table, could a bit vector be useful, could you solve it in O(N logN) time?
+// Notes: 1) Ask yourself if chars are ASCII (128), Extended ascii (256) or Unicode ( >100.000)
 
 #include "catch.hpp"
 
