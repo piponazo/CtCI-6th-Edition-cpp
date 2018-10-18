@@ -13,6 +13,7 @@ using namespace std;
 
 // Use a hash table to identify if a value has been already added:
 // Time complexity: O(N)
+// Space complexity: O(N)
 // This implementation uses extra space (unordered_set)
 // This implementation is not recursive.
 void removeDuplicates(Node* node) {
@@ -59,23 +60,32 @@ void removeDuplicatesNoBuffer(Node* node) {
     removeDuplicatesNoBuffer(node->next.get());
 }
 
-TEST_CASE( "Remove duplicates", "[lists]" ) {
-    Node root(5);
-    Node *tail = &root;
-
-    for (int i=1; i<=5; i++) {
-        tail = tail->appendToTail(i);
-    }
-
-    REQUIRE(countNodes(&root) == 6);
+TEST_CASE( "Remove duplicates when they are in non consecutive positions", "[2.1]" ) {
+    auto list = createList({5,1,2,3,4,5});
+    REQUIRE(countNodes(list.get()) == 6);
 
     SECTION("with hash table version") {
-        removeDuplicates(&root);
-        REQUIRE(countNodes(&root) == 5);
+        removeDuplicates(list.get());
+        REQUIRE(countNodes(list.get()) == 5);
     }
 
     SECTION("with no space version") {
-        removeDuplicatesNoBuffer(&root);
-        REQUIRE(countNodes(&root) == 5);
+        removeDuplicatesNoBuffer(list.get());
+        REQUIRE(countNodes(list.get()) == 5);
+    }
+}
+
+TEST_CASE( "Remove duplicates when they are in consecutive positions", "[2.1]" ) {
+    auto list = createList({1,2,2,2,3,4,5});
+    REQUIRE(countNodes(list.get()) == 7);
+
+    SECTION("with hash table version") {
+        removeDuplicates(list.get());
+        REQUIRE(countNodes(list.get()) == 5);
+    }
+
+    SECTION("with no space version") {
+        removeDuplicatesNoBuffer(list.get());
+        REQUIRE(countNodes(list.get()) == 5);
     }
 }

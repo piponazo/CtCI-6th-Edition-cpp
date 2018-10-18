@@ -1,80 +1,88 @@
-#include "lists/utils.h"
 #include "catch.hpp"
+#include "lists/utils.h"
 
-TEST_CASE( "get node: recursive", "[lists]" ) {
+TEST_CASE("getNode - recursive version", "[lib]")
+{
     Node root(0);
     Node *tail = &root;
 
-    for (int i=1; i<=5; i++) {
+    for (int i = 1; i <= 5; i++) {
         tail = tail->appendToTail(i);
     }
 
-    SECTION("get existing node") {
+    SECTION("return pointer to existing node")
+    {
         auto node = getNode(&root, 3);
         REQUIRE(node != nullptr);
         REQUIRE(node->value == 3);
     }
 
-    SECTION("return nullptr with non existing value") {
-        auto node = getNode(&root, 9);
-        REQUIRE(node == nullptr);
+    SECTION("return nullptr for a non existing node")
+    {
+        REQUIRE(nullptr == getNode(&root, 9));
     }
 }
 
-
-TEST_CASE( "get node: iterative", "[lists]" ) {
+TEST_CASE("getNode - iterative version", "[lib]")
+{
     Node root(0);
     Node *tail = &root;
 
-    for (int i=1; i<=5; i++) {
+    for (int i = 1; i <= 5; i++) {
         tail = tail->appendToTail(i);
     }
 
-    SECTION("get existing node") {
+    SECTION("return pointer to existing node")
+    {
         auto node = getNodeIt(&root, 3);
         REQUIRE(node != nullptr);
         REQUIRE(node->value == 3);
     }
 
-    SECTION("return nullptr with non existing value") {
-        auto node = getNodeIt(&root, 9);
-        REQUIRE(node == nullptr);
+    SECTION("return nullptr for a non existing value")
+    {
+        REQUIRE(nullptr == getNodeIt(&root, 9));
     }
 }
 
-
-TEST_CASE( "create list with vector of values", "[lists]" ) {
-    std::vector<int> values{1,2,3,4,5};
+TEST_CASE("create list with vector of values", "[lib]")
+{
+    std::vector<int> values{1, 2, 3, 4, 5};
     auto list = createList(values);
 
     REQUIRE(list);
     REQUIRE(countNodes(list.get()) == 5);
 
-    SECTION("All elements inserted are available") {
-        for(auto value: values) {
+    SECTION("All elements inserted are available")
+    {
+        for (auto value : values) {
             REQUIRE(getNodeIt(list.get(), value));
         }
     }
 
-    SECTION("values not inserted are not in the list") {
+    SECTION("values not inserted are not in the list")
+    {
         REQUIRE_FALSE(getNodeIt(list.get(), 0));
         REQUIRE_FALSE(getNodeIt(list.get(), 6));
     }
 }
 
-TEST_CASE( "does not create list with empty list of values", "[lists]" ) {
+TEST_CASE("does not create list with empty list of values", "[lib]")
+{
     auto list = createList({});
     REQUIRE_FALSE(list);
 }
 
-TEST_CASE( "convert list to vector of values", "[lists]" ) {
-    std::vector<int> values{1,2,3,4,5};
-    auto list = createList(values);
+TEST_CASE("convertListToVector does its job with vector.size() >= 1", "[lib]")
+{
+    std::vector<int> expectedValues{1, 2, 3, 4, 5};
+    auto list = createList(expectedValues);
     auto valuesFromList = convertListToVector(list.get());
-    REQUIRE(values == valuesFromList);
+    REQUIRE(expectedValues == valuesFromList);
 }
 
-TEST_CASE( "convert list to vector return empty vector with empty list", "[lists]" ) {
+TEST_CASE("convertListToVector return empty vector with empty list", "[lib]")
+{
     auto valuesFromList = convertListToVector(nullptr);
-    REQUIRE(valuesFromList == std::vector<int>());
+    REQUIRE(valuesFromList.empty());
 }
