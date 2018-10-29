@@ -67,28 +67,32 @@ std::unique_ptr<Node> sumListsReversed(const Node* l1, const Node* l2, int carri
         value += l2->value;
     }
     auto root = std::make_unique<Node>(value%10);
+    bool carriedValue = (value >= 10);
 
-    if (l1->next || l2->next) {
-        root->next = std::move(sumListsReversed(l1->next.get(), l2->next.get(), value < 10? 0:1));
+    if ((l1 && l1->next) || (l2 && l2->next)) {
+        root->next = std::move(sumListsReversed(l1->next.get(), l2->next.get(), carriedValue));
+    } else if (carriedValue) {
+        root->next = std::move(sumListsReversed(nullptr, nullptr, carriedValue));
     }
+
     return root;
 }
 
-TEST_CASE("sum lists in reversed order (same lengths)") {
+TEST_CASE("sum lists in reversed order (same lengths)", "[2.5]") {
     auto l1 = createList({7,1,6});
     auto l2 = createList({5,9,2});
     auto l3 = sumListsReversed(l1.get(), l2.get());
     REQUIRE(convertListToVector(l3.get()) == std::vector<int>{2,1,9});
 }
 
-TEST_CASE("sum lists in reversed order (same lengths with carried value)") {
+TEST_CASE("sum lists in reversed order (same lengths with carried value)", "[2.5]") {
     auto l1 = createList({7,1,6});
     auto l2 = createList({5,9,3});
     auto l3 = sumListsReversed(l1.get(), l2.get());
     REQUIRE(convertListToVector(l3.get()) == std::vector<int>{2,1,0,1});
 }
 
-TEST_CASE("sum lists in reversed order (different lengths)") {
+TEST_CASE("sum lists in reversed order (different lengths)", "[2.5]") {
     auto l1 = createList({7,1,6});
     auto l2 = createList({5,9,2,1});
     auto l3 = sumListsReversed(l1.get(), l2.get());
