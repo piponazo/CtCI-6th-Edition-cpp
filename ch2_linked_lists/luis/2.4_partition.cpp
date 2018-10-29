@@ -18,6 +18,10 @@
 using namespace std;
 
 unique_ptr<Node> partition(Node *root, int value) {
+    if (!root) {
+        return nullptr;
+    }
+
     unique_ptr<Node> smallerValues;
     unique_ptr<Node> biggerValues;
     Node* smallerValuesNext = nullptr;
@@ -42,7 +46,14 @@ unique_ptr<Node> partition(Node *root, int value) {
         root = root->next.get();
     }
 
-    biggerValuesNext = biggerValues.get();
+    if (!smallerValues) {
+        smallerValues = make_unique<Node>(biggerValues->value);
+        smallerValuesNext = smallerValues.get();
+        biggerValuesNext = biggerValues->next.get();
+    } else {
+        biggerValuesNext = biggerValues.get();
+    }
+
     while(biggerValuesNext) {
         smallerValuesNext = smallerValuesNext->appendToTail(biggerValuesNext->value);
         biggerValuesNext = biggerValuesNext->next.get();
@@ -50,9 +61,29 @@ unique_ptr<Node> partition(Node *root, int value) {
     return smallerValues;
 }
 
-TEST_CASE("partition list around X value ", "[lists]") {
+TEST_CASE("partition list around X value, with lower and higher values", "[2.4]") {
     auto list = createList({3,5,8,5,10,2,1});
     auto listPartitioned = partition(list.get(), 5);
     auto outputValues = convertListToVector(listPartitioned.get());
     REQUIRE(outputValues == std::vector<int>{3, 2, 1, 5, 8, 5, 10});
+}
+
+TEST_CASE("partition list around X value, only with lower values", "[2.4]") {
+    std::vector<int> originalValues({3,5,8,5,10,2,1});
+    auto list = createList(originalValues);
+    auto listPartitioned = partition(list.get(), 11);
+    auto outputValues = convertListToVector(listPartitioned.get());
+    REQUIRE(outputValues == originalValues);
+}
+
+TEST_CASE("partition list around X value, only with higher values", "[2.4]") {
+    std::vector<int> originalValues({3,5,8,5,10,2,1});
+    auto list = createList(originalValues);
+    auto listPartitioned = partition(list.get(), 0);
+    auto outputValues = convertListToVector(listPartitioned.get());
+    REQUIRE(outputValues == originalValues);
+}
+
+TEST_CASE("partition list around X value, do nothing with empty list", "[2.4]") {
+    REQUIRE(nullptr == partition(nullptr, 0));
 }
