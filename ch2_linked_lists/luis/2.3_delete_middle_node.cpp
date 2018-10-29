@@ -24,22 +24,24 @@ bool deleteNode(Node* node) {
     return true;
 }
 
-TEST_CASE( "delete node", "[lists]" ) {
-    Node root(0);
-    Node *tail = &root;
-
-    for (int i=1; i<=5; i++) {
-        tail = tail->appendToTail(i);
-    }
+TEST_CASE( "delete node", "[2.3]" ) {
+    auto l1 = createList({0,1,2,3,4,5});
 
     SECTION("delete inner node") {
-        auto node = getNodeIt(&root, 3);
-        REQUIRE(node != nullptr);
+        auto node = getNodeIt(l1.get(), 3);
         REQUIRE(deleteNode(node) == true);
-        REQUIRE(getNodeIt(&root, 3) == nullptr);
+        REQUIRE(getNodeIt(l1.get(), 3) == nullptr);
+
+        auto newList = convertListToVector(l1.get());
+        REQUIRE(newList == std::vector<int>{0,1,2,4,5});
     }
 
     SECTION("does not delete a non existing node") {
         REQUIRE_FALSE(deleteNode(nullptr));
+    }
+
+    SECTION("does not delete last node") {
+        auto node = getNodeIt(l1.get(), 5);
+        REQUIRE_FALSE(deleteNode(node));
     }
 }
