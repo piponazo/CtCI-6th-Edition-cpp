@@ -10,14 +10,15 @@
 // rows go into columns
 // in place?
 
-// Let's start with the non-in-place solution
+// #51  - Try thinking about it layer by later. Can you rotate a specific layer?
+// #100 - Rotating a specific alyer would just mean swapping the values in four arrays. If you were asked to swap
+// values in two arrays, could you do this? can you then extend it to four arrays?
 
 #include "catch.hpp"
 #include <vector>
 #include <iostream>
 
 using namespace std;
-
 
 vector<vector<int>> rotateImage(const vector<vector<int>>&image) {
     if (image.empty()) {
@@ -72,29 +73,49 @@ bool rotateImageInPlace(vector<vector<int>>&image) {
     }
 }
 
-TEST_CASE("rotate square image") {
-    vector<vector<int>> original { {1,2,3,4},
-                                   {5,6,7,8},
-                                   {1,2,3,4},
-                                   {5,6,7,8}};
+TEST_CASE("1.7 - rotate square image (4x4)") {
+    SECTION("4x4")
+    {
+        vector<vector<int>> original { {1,2,3,4},
+                                       {5,6,7,8},
+                                       {1,2,3,4},
+                                       {5,6,7,8}};
 
-    vector<vector<int>> expected { {5,1,5,1},
-                                   {6,2,6,2},
-                                   {7,3,7,3},
-                                   {8,4,8,4}};
+        vector<vector<int>> expected { {5,1,5,1},
+                                       {6,2,6,2},
+                                       {7,3,7,3},
+                                       {8,4,8,4}};
+        auto result = rotateImage(original);
+        REQUIRE(result == expected);
+    }
+    SECTION("5x5")
+    {
+        vector<vector<int>> original { {1,2,3,4,5},
+                                       {5,6,7,8,9},
+                                       {1,2,3,4,5},
+                                       {5,6,7,8,9},
+                                       {1,2,3,4,5},
+                                     };
 
-    auto result = rotateImage(original);
-    REQUIRE(result == expected);
+        vector<vector<int>> expected { {1,5,1,5,1},
+                                       {2,6,2,6,2},
+                                       {3,7,3,7,3},
+                                       {4,8,4,8,4},
+                                       {5,9,5,9,5},
+                                     };
+        auto result = rotateImage(original);
+        REQUIRE(result == expected);
+    }
 }
 
-TEST_CASE("rotate image of size 0") {
+TEST_CASE("1.7 - rotate image of size 0") {
     vector<vector<int>> original;
     auto result = rotateImage(original);
     REQUIRE(result == original);
 }
 
 
-TEST_CASE("does not rotate non-square image") {
+TEST_CASE("1.7 - does not rotate non-square image") {
     vector<vector<int>> original { {1,2,3,4},
                                    {5,6,7,8},
                                    {5,6,7,8}};
@@ -102,30 +123,63 @@ TEST_CASE("does not rotate non-square image") {
 }
 
 
-TEST_CASE("rotate square image (in-place)") {
-    vector<vector<int>> original { {1,2,3,4},
-                                   {5,6,7,8},
-                                   {1,2,3,4},
-                                   {5,6,7,8}};
+TEST_CASE("1.7 - rotate square image (in-place)") {
+    SECTION("4x4")
+    {
+        vector<vector<int>> original { {1,2,3,4},
+                                       {5,6,7,8},
+                                       {1,2,3,4},
+                                       {5,6,7,8}};
 
-    vector<vector<int>> expected { {5,1,5,1},
-                                   {6,2,6,2},
-                                   {7,3,7,3},
-                                   {8,4,8,4}};
+        vector<vector<int>> expected { {5,1,5,1},
+                                       {6,2,6,2},
+                                       {7,3,7,3},
+                                       {8,4,8,4}};
 
-    REQUIRE(rotateImageInPlace(original));
-    REQUIRE(original == expected);
+        REQUIRE(rotateImageInPlace(original));
+        REQUIRE(original == expected);
+    }
+    SECTION("5x5")
+    {
+        vector<vector<int>> original { {1,2,3,4,5},
+                                       {5,6,7,8,9},
+                                       {1,2,3,4,5},
+                                       {5,6,7,8,9},
+                                       {1,2,3,4,5},
+                                     };
+
+        vector<vector<int>> expected { {1,5,1,5,1},
+                                       {2,6,2,6,2},
+                                       {3,7,3,7,3},
+                                       {4,8,4,8,4},
+                                       {5,9,5,9,5},
+                                     };
+
+        REQUIRE(rotateImageInPlace(original));
+        REQUIRE(original == expected);
+    }
 }
 
-TEST_CASE("rotate image of size 0 (in-place)") {
+TEST_CASE("1.7 - rotate image of size 0 (in-place)") {
     vector<vector<int>> original;
     REQUIRE_FALSE(rotateImageInPlace(original));
 }
 
 
-TEST_CASE("does not rotate non-square image (in-place)") {
+TEST_CASE("1.7 - does not rotate non-square image (in-place)") {
     vector<vector<int>> original { {1,2,3,4},
                                    {5,6,7,8},
                                    {5,6,7,8}};
     REQUIRE_FALSE(rotateImageInPlace(original));
 }
+
+//void printMat(const vector<vector<std::uint32_t>>& mat)
+//{
+//    const size_t N{mat.size()};
+//    for(size_t row = 0; row<N; row++) {
+//        for(size_t col = 0; col<N; col++) {
+//            cout << mat[row][col] << " ";
+//        }
+//        cout << endl;
+//    }
+//}

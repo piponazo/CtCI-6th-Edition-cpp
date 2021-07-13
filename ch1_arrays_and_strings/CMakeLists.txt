@@ -8,4 +8,7 @@ add_executable(1_luis
     luis/1.6_string_compression.cpp
     luis/1.7_rotate_matrix.cpp
     luis/1.8_zero_matrix.cpp
+    luis/1.9_string_rotation.cpp
 )
+
+add_executable(practice luis/practice.cpp)

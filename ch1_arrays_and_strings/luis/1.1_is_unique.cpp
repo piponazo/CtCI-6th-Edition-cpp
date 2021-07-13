@@ -37,7 +37,6 @@ using namespace std;
 // Implementation with has table + std::all_of + lambda
 // Time complexity:   O(N)
 // Space complexity:  O(N)
-// Notes: This version is a bit longer than the one in line 36. But probably more performant
 bool uniqueCharactersSet(const string& str) {
     if (str.size() > 256)
         return false;
@@ -65,7 +64,7 @@ bool uniqueCharactersBitset(const string& str) {
 
 // Without using additional data structures. 
 // Time complexity:  O(N logN)
-// Space complexity: O(1)
+// Space complexity: O(1) ... maybe not enterily true, we need to actually copy the parameter
 bool uniqueCharactersInPlace(string str) {
     if (str.empty())
         return true;
