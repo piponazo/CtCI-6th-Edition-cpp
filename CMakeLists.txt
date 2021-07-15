@@ -16,3 +16,6 @@ add_subdirectory("ch5_bit_manipulation")
 add_subdirectory("ch7_ood")
 add_subdirectory("ch10_sorting_and_searching")
 add_subdirectory("ch12_cpp")
+
+add_executable(practice practice.cpp)
+target_link_libraries(practice PRIVATE lists)

@@ -15,6 +15,7 @@ add_executable(2_luis
     luis/2.3_delete_middle_node.cpp
     luis/2.4_partition.cpp
     luis/2.5_sum_lists.cpp
+    luis/2.6_palindrome.cpp
 )
 
 target_link_libraries(2_luis PRIVATE lists)

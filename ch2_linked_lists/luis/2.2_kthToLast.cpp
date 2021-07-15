@@ -1,5 +1,13 @@
 // Return Kth to Last: Implement an algorithm to find the kth to last element of a singly linked
 // list.
+// #8   What if you know the linked list size? What is the difference between finding the Kth-to-last element and
+//      finding the Xth element?
+// #25  If you don't know the linked list size, can you compute it? How does this impact the runtime?
+// #41  Try implementing it recursively. If you could find the (K-1)th to last element, can you find the Kth element?
+// #67  You might find useful to return multiple values. Some languages don't directly support this, but there are
+//      workarounds in essentially any language. What are some of those workarounds?
+// #126 Can you do it iteratively? Imagine if you had two pointers pointing to adjacent nodes and they were moving at
+//      the same speed through the linked list. When one hits the end of the linked list, where will the other be?
 
 #include "catch.hpp"
 #include "lists/Node.h"
@@ -18,24 +26,24 @@ const Node* findKtoLast(const Node* root, size_t k)
         return nullptr;
     }
 
-    const Node* p1 = root; // Runner
-    const Node* p2 = root;
+    const Node* runner = root; // Runner
+    const Node* node = root;
 
-    // Advance p1 alone k positions
+    // Advance runner k positions
     for (size_t i = 0; i < k; i++) {
-        if (!p1->next) {
+        if (!runner->next) {
             throw runtime_error("k is greater than list size");
         }
-        p1 = p1->next.get();
+        runner = runner->next.get();
     }
 
     // Now the two pointers advance together
-    while (p1->next) {
-        p2 = p2->next.get();
-        p1 = p1->next.get();
+    while (runner->next) {
+        node = node->next.get();
+        runner = runner->next.get();
     }
 
-    return p2;
+    return node;
 }
 
 // Time complexity: O(N)
